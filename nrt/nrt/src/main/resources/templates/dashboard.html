@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{header :: pageheader}"></head>
+<body>
+
+<nav th:replace="~{header :: navbar}"></nav>
+
+<div class="container-fluid bg-light py-4">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="bg-white p-5 rounded shadow-lg">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="text-center mb-4">Your Dashboard</h2>
+          </div>
+        </div>
+
+        <!-- User Information -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <p><strong>User:</strong> <span th:text="${user.email}"></span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Plan Name:</strong> <span th:each="planName : ${uniquePlanNames}" th:text="${planName}"></span></p>
+          </div>
+        </div>
+
+        <!-- Remaining Bids and Messages -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <p><strong>Remaining Bids:</strong> <span th:text="${user.remainingBids}"></span></p>
+          </div>
+          <div class="col-md-6">
+            <p th:if="${isNewUser}" class="text-info">Welcome, New User! You have no active subscriptions.</p>
+          </div>
+        </div>
+
+        <hr class="mt-4 mb-4">
+
+        <!-- Projects Section -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <h3 class="text-center mb-3">Available Projects</h3>
+            <table class="table table-hover table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>Project Name</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="project : ${projects}">
+                  <td th:text="${project.name}"></td>
+                  <td th:text="${project.description}"></td>
+                  <td>
+                    <form th:action="@{/projects/bid}" method="post">
+                      <input type="hidden" name="registerId" th:value="${user.RegisterId}" />
+                      <input type="hidden" name="projectId" th:value="${project.projectId}" />
+                      <button type="submit" class="btn btn-primary btn-sm">Bid</button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mt-4">
+          <div class="col-12 d-flex justify-content-center gap-3">
+            <a th:href="@{/subscriptions/buy-bids}" class="btn btn-outline-primary btn-lg">Buy More Bids</a>
+            <a th:href="@{/subs}" class="btn btn-outline-secondary btn-lg">Track Subscriptions Details</a>
+            <a th:href="@{/logout}" class="btn btn-outline-danger btn-lg">Logout</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
