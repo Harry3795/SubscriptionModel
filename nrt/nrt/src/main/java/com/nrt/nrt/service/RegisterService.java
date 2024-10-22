@@ -31,7 +31,12 @@ public class RegisterService {
     public void addBidsToUser(Long registerId, int numberOfBids) {
         RegisterModel user = registerLogRepository.findById(registerId);
         if (user != null) {
-            int updatedBids = user.getRemainingBids() + numberOfBids;
+        	
+        	Integer remainingBids =user.getRemainingBids();
+        	if(remainingBids== null) { 
+        		remainingBids=0;
+        	}
+        	int updatedBids = remainingBids + numberOfBids;
             user.setRemainingBids(updatedBids);
             registerLogRepository.updateUserBids(user);
         } else {
