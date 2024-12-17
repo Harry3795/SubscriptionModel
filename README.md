@@ -45,3 +45,6 @@ INSERT INTO dbo.plans (name, validity_in_months, number_of_bids, price) VALUES
 ('Premium', 12, 120, 10999);
 
 insert into projects values('nrt','nrt side')
+
+
+http://10.93.196.158:9999/docmgmt/generate-dynamic-report
